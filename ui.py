@@ -13,17 +13,38 @@ BACKGROUND_COLOR = (50, 50, 50)
 # UI font.
 FONT = pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 30) # TODO : Configure
 
-class Container(object):
+class Clickable(object):
+    """ Object that can be clicked. """
+
+    def __init__(self):
+        """ Default constructor. """
+        self.onClick = None
+    
+
+class Container(Clickable):
     """ Base class for graphics object that contains other. """
 
     def __init__(self):
         """ Default constructor. """
+        Clickable.__init__(self)
         self.childs = []
 
     def add(self, child):
         """ Adds the given child object to this container. """
         self.childs.append(child)
-
+        
+    def onClickEvent(self, p):
+        """ """
+        for child in self.childs:
+            if child.bounds is not None:
+                b = child.bounds
+                collide = p[0] > b[0] and p[1] > b[1] and p[0] < (b[0] + b[2]) and p[1] < (b[1] + b[3])
+                if collide:
+                    if isinstance(child, Container):
+                        child.onClickEvent(p)
+                    if child.onClick is not None:
+                        child.onClick()
+                    
 class Panel(Container):
     """ Base class for a panel. """
     
@@ -33,6 +54,7 @@ class Panel(Container):
         self.childs = []
         self.orientation = orientation
         self.padding = padding
+        self.bounds = None
     
     def draw(self, target, position):
         """ Draw this panel content. """
@@ -48,33 +70,41 @@ class Panel(Container):
             offset += childSize[0] if self.orientation == 'horizontal' else childSize[1]
             size[0] = (size[0] + childSize[0] + self.padding) if self.orientation == 'horizontal' else max(childSize[0], size[0])
             size[1] = (size[1] + childSize[1] + self.padding) if self.orientation == 'vertical' else max(childSize[1], size[1])
+        self.bounds = (position[0], position[1], size[0], size[1])
         return size
 
-class Label(object):
+class Label(Clickable):
     """ Simple text object. """
 
     def __init__(self, text, color=(255, 255, 255), font=FONT):
         """ Default constructor. """
+        Clickable.__init__(self)
         self.color = color
         self.font = font
         self.text = text
+        self.bounds = None
         
     def draw(self, target, position):
         """ Draw the rendered text into the given target at the given position. """
         target.blit(self.font.render(self.text, 1, self.color), position)
-        return self.font.size(self.text)
+        size = self.font.size(self.text)
+        self.bounds = (position[0], position[1], size[0], size[1])
+        return size
 
-class Image(object):
+class Image(Clickable):
     """ Simple image object. """
 
     def __init__(self, path):
         """ Default constructor. """
+        Clickable.__init__(self)
         self.delegate = pygame.image.load(path).convert_alpha()
+        self.bounds = None
 
     def draw(self, target, position):
         """ Draw the delegate image into the given target at the given position. """
         target.blit(self.delegate, position)
         size = self.delegate.get_rect()
+        self.bounds = (position[0], position[1], size[2], size[3])
         return (size[2], size[3])
 
 class Window(Container):
@@ -101,4 +131,6 @@ class Window(Container):
             for event in pygame.event.get():
                 if event.type == QUIT:
                     self.running = False
+                elif event.type == MOUSEBUTTONDOWN:
+                   self.onClickEvent(event.pos)
             pygame.display.flip()

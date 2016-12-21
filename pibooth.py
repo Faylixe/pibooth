@@ -14,19 +14,29 @@ def onVideoPerformed():
 window = Window()
 
 # Photo / Video switch.
-icons = Panel(orientation='horizontal')
-icons.add(Image('resources/icons/photo.png'))
-icons.add(Image('resources/icons/video.png'))
+mode = Panel(orientation='horizontal')
+photo = Image('resources/icons/photo.png')
+video = Image('resources/icons/video.png')
+label = Label('Photo')
 
-# Photo / Video label.
-label = Panel(orientation='horizontal')
-label.add(Label('Photo'))
+def onPhotoMode():
+    print('PHOTO MODE')
+
+def onVideoMode():
+    print('VIDEO MODE')
+
+photo.onClick = onPhotoMode
+video.onClick = onVideoMode
+mode.add(photo)
+mode.add(label)
+mode.add(video)
+
+# Start button.
 
 # Main panel.
-panel = Panel(orientation='vertical')
-panel.add(icons)
-panel.add(label)
-
+panel = Panel(orientation='vertical', padding=10)
+panel.add(mode)
+panel.add(Image('resources/icons/record.png'))
 # Starting UI thread.
 window.add(panel)
 window.run()
