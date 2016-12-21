@@ -19,11 +19,15 @@ photo = Image('resources/icons/photo.png')
 video = Image('resources/icons/video.png')
 label = Label('Photo')
 
+def setLabel(text):
+    label.text = text
+    window.invalidate()
+
 def onPhotoMode():
-    print('PHOTO MODE')
+    setLabel('Photo')
 
 def onVideoMode():
-    print('VIDEO MODE')
+    setLabel('Video')
 
 photo.onClick = onPhotoMode
 video.onClick = onVideoMode
@@ -36,7 +40,6 @@ mode.add(video)
 # Main panel.
 panel = Panel(orientation='vertical', padding=10)
 panel.add(mode)
-panel.add(Image('resources/icons/record.png'))
 # Starting UI thread.
 window.add(panel)
 window.run()

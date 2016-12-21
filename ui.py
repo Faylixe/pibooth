@@ -11,7 +11,7 @@ pygame.font.init()
 BACKGROUND_COLOR = (50, 50, 50)
 
 # UI font.
-FONT = pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 30) # TODO : Configure
+FONT = pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 30) # TODO : Configure ?
 
 class Clickable(object):
     """ Object that can be clicked. """
@@ -34,16 +34,15 @@ class Container(Clickable):
         self.childs.append(child)
         
     def onClickEvent(self, p):
-        """ """
+        """ Handle click event and check if the area of this container has a hit. """
         for child in self.childs:
             if child.bounds is not None:
                 b = child.bounds
-                collide = p[0] > b[0] and p[1] > b[1] and p[0] < (b[0] + b[2]) and p[1] < (b[1] + b[3])
-                if collide:
-                    if isinstance(child, Container):
-                        child.onClickEvent(p)
+                if p[0] > b[0] and p[1] > b[1] and p[0] < (b[0] + b[2]) and p[1] < (b[1] + b[3]):
                     if child.onClick is not None:
                         child.onClick()
+                    if isinstance(child, Container):
+                        child.onClickEvent(p)
                     
 class Panel(Container):
     """ Base class for a panel. """
