@@ -55,13 +55,15 @@ class PiBooth(object):
         self.effects = effects
         self.currentEffect = 0
         effectPanel = Panel(orientation='horizontal', padding=0)
-        # TODO : Add left arrow.
-        container = Panel(orientation='vertical', padding=10)
-        container.add(Image('resources/icons/filter.png'))
+        effectPanel.add(Image('resources/icons/filter.png'))
+        container = Panel(orientation='horizontal', padding=0)
+        prevEffect = Label('<', size='large')
+        nextEffect = Label('>', size='large')
         name = Label(self.effects[self.currentEffect], size='medium')
+        container.add(prevEffect)
         container.add(name)
+        container.add(nextEffect)
         effectPanel.add(container)
-        # TODO : Add left arrow.
         self.photoSettings.add(effectPanel)
 
     def createVideoSettings(self):
