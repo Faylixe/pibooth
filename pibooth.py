@@ -54,9 +54,9 @@ class PiBooth(object):
         self.photoSettings.add(Image('resources/icons/record.png'))
         self.effects = effects
         self.currentEffect = 0
-        effectPanel = Panel(orientation='horizontal')
+        effectPanel = Panel(orientation='horizontal', padding=0)
         # TODO : Add left arrow.
-        container = Panel(orientation='vertical')
+        container = Panel(orientation='vertical', padding=10)
         container.add(Image('resources/icons/filter.png'))
         name = Label(self.effects[self.currentEffect], size='medium')
         container.add(name)
@@ -76,6 +76,11 @@ class PiBooth(object):
         self.sidebar.add(self.videoSettings if mode == VIDEO_MODE else self.photoSettings)
         self.currentMode = mode
         self.window.invalidate()
+
+    def setEffect(self, effect):
+        """ """
+        pass
+
 
 if __name__ == '__main__':
     info = pygame.display.Info()
