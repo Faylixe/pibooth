@@ -56,10 +56,10 @@ class PiBooth(object):
         self.currentEffect = 0
         effectPanel = Panel(orientation='horizontal', padding=0)
         effectPanel.add(Image('resources/icons/filter.png'))
-        container = Panel(orientation='horizontal', padding=0)
+        container = Panel(orientation='horizontal', padding=10)
         prevEffect = Label('<', size='large')
         nextEffect = Label('>', size='large')
-        name = Label(self.effects[self.currentEffect], size='medium')
+        name = Label(self.effects[self.currentEffect], size='large')
         container.add(prevEffect)
         container.add(name)
         container.add(nextEffect)
