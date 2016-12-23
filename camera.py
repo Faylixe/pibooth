@@ -9,6 +9,7 @@ class Camera(object):
         """ """
         self.size = size
         self.delegate = PiCamera()
+        self.delegate.image_effect = 'cartoon'
     
     def start(self):
         """ """
