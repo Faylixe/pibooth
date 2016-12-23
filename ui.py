@@ -15,6 +15,7 @@ FONT = {
     'small' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 10),
     'medium' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 20),
     'large' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 30),
+    'huge' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 50),
 }
 
 class Clickable(object):
@@ -161,7 +162,7 @@ class Window(Container):
             self.onWindowClick(p)
         else:
             Container.__onClickEvent(self, p)
-            
+
     def stop(self):
         """ Stop this window. """
         self.running = False
