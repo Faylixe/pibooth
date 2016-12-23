@@ -64,10 +64,6 @@ class PiBooth(object):
         effectPanel.add(container)
         self.sidebar.add(effectPanel)
 
-    def createVideoSettings(self):
-        """ Creates and configures widget for video configuration. """
-        self.videoSettings.add(Label('video settings'))
-    
     def setMode(self, mode):
         """ Sets current mode and updates UI accordingly. """
         if self.inCapture or mode == self.currentMode: return
@@ -86,7 +82,6 @@ if __name__ == '__main__':
     camera = Camera(size)
     booth = PiBooth(size=size)
     booth.createModeController()
-    booth.createPhotoSettings(camera.effects(), lambda effect: camera.setEffect(effect))
-    booth.createVideoSettings()
+    booth.createSettings(camera.effects(), lambda effect: camera.setEffect(effect))
     camera.start()
     booth.window.start()
