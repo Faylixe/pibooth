@@ -2,6 +2,15 @@
 
 from picamera import PiCamera
 
+EFFECTS = [
+    'Noir et blanc',
+    'Avatar',
+    'Cartoon',
+    'Paint',
+    'Sepia',
+    'Normal'
+]
+
 class Camera(object):
     """ """
 
@@ -16,13 +25,24 @@ class Camera(object):
 
     def effects(self):
         """ """
-        return self.delegate.IMAGE_EFFECTS.keys()
+        return EFFECTS
 
     def setEffect(self, effect):
-        """ """
-        # TODO : Consider restart.
-        if effect in self.effects():
-            self.delegate.image_effect = effect
+        """ Effect setter."""
+        if effect == 'Avatar':
+            self.delegate.image_effect = 'colorswap'
+        elif effect == 'Cartoon':
+            self.delegate.image_effect = 'cartoon'
+        elif effect == 'Paint':
+            self.delegate.image_effect = 'watercolor'
+        elif effect == 'Noir et blanc':
+            self.delegate.color_effects = (128, 128)
+        elif effect == 'Sepia':
+            self.delegate.color_effects = (100, 150)
+        else:
+            self.delegate.image_effect = 'none'
+            self.delegate.color_effects = None
+
 
     def stop(self):
         """ """
