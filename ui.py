@@ -145,12 +145,12 @@ class Window(Container):
                     self.running = False
                 elif event.type == MOUSEBUTTONDOWN:
                    self.onClickEvent(event.pos)
-                elif event.type == KEYDOWN
+                elif event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         self.running = False
                     elif event.key in self.listeners.keys():
                         self.listeners[event.key]()
-                        
+
             pygame.display.flip()
 
     def stop(self):

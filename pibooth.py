@@ -82,6 +82,7 @@ class PiBooth(object):
         elif self.currentEffect >= len(self.effects):
             self.currentEffect = 0
         self.camera.setEffect(self.effects[self.currentEffect])
+        self.window.invalidate()
 
 
 if __name__ == '__main__':
