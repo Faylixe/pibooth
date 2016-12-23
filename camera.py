@@ -22,7 +22,7 @@ class Camera(object):
         """ """
         # TODO : Consider restart.
         if effect in self.effects():
-            self.delegate.effect = effect
+            self.delegate.image_effect = effect
 
     def stop(self):
         """ """
