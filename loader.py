@@ -18,7 +18,7 @@ class Loader(object):
     def welcome(self):
         """ Welcome screen. """
         header = Label('Bienvenue', color=BLACK, size='large')
-        message = Label('Appuyer sur l\'écran pour commencer')
+        message = Label('Appuyer pour commencer')
         self.container.add(header)
         self.container.add(message)
         def onClick(position):
