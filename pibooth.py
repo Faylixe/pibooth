@@ -53,11 +53,17 @@ class PiBooth(object):
         """ Creates and configures widget for photo configuration. """
         self.photoSettings.add(Image('resources/icons/record.png'))
         self.effects = effects
-        for effect in self.effects:
-            button = Label(effect, size='small')
-            button.onClick = lambda: callback(effect)
-            self.photoSettings.add(button)
-    
+        self.currentEffect = 0
+        effectPanel = Panel(orientation='horizontal')
+        # TODO : Add left arrow.
+        container = Panel(orientation='vertical')
+        container.add(Image('resources/icons/filter.png'))
+        name = Label(self.effects[self.currentEffect], size='medium')
+        container.add(name)
+        effectPanel.add(container)
+        # TODO : Add left arrow.
+        self.photoSettings.add(effectPanel)
+
     def createVideoSettings(self):
         """ Creates and configures widget for video configuration. """
         self.videoSettings.add(Label('video settings'))
