@@ -34,7 +34,6 @@ class PiBooth(object):
     def bind(self):
         """ """
         self.sidebar.add(self.mode)
-        self.sidebar.add(self.photoSettings)
         self.root.add(self.sidebar)
         self.window.add(self.root)
 
