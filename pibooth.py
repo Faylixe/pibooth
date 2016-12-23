@@ -69,7 +69,7 @@ class PiBooth(object):
 if __name__ == '__main__':
     info = pygame.display.Info()
     size = (info.current_w, info.current_h)
-    camera = Camera()
+    camera = Camera(size)
     camera.start()
     booth = PiBooth(size=size)
     booth.createModeController()

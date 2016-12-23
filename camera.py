@@ -12,7 +12,7 @@ class Camera(object):
     
     def start(self):
         """ """
-        self.delegate.start_preview(fullscreen=False, window = (200, 20, self.size[0] - 200, self.size[1] - 40))
+        self.delegate.start_preview(fullscreen=False, window = (500, 20, self.size[0] - 500, self.size[1] - 40))
 
     def stop(self):
         """ """
