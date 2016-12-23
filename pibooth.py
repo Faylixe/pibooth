@@ -49,9 +49,13 @@ class PiBooth(object):
         photo.onClick = lambda: self.setMode(PHOTO_MODE)
         video.onClick = lambda: self.setMode(VIDEO_MODE)
 
-    def createPhotoSettings(self):
+    def createPhotoSettings(self, effects, callback):
         """ Creates and configures widget for photo configuration. """
         self.photoSettings.add(Image('resources/icons/record.png'))
+        self.effects = effects
+        for effect in self.effects:
+            button = Label(effect, size='small')
+            button.onClick = lambda: callback(effect)
     
     def createVideoSettings(self):
         """ Creates and configures widget for video configuration. """
@@ -73,6 +77,6 @@ if __name__ == '__main__':
     camera.start()
     booth = PiBooth(size=size)
     booth.createModeController()
-    booth.createPhotoSettings()
+    booth.createPhotoSettings(camera.effects(), lambda effect: camera.setEffect(effect))
     booth.createVideoSettings()
     booth.window.start()

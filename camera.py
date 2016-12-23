@@ -9,11 +9,20 @@ class Camera(object):
         """ """
         self.size = size
         self.delegate = PiCamera()
-        self.delegate.image_effect = 'cartoon'
     
     def start(self):
         """ """
         self.delegate.start_preview(fullscreen=False, window = (500, 20, self.size[0] - 500, self.size[1] - 40))
+
+    def effects(self):
+        """ """
+        return self.delegate.IMAGE_EFFECTS
+
+    def setEffect(self, effect):
+        """ """
+        # TODO : Consider restart.
+        if effect in self.effects():
+            self.delegate.effect = effect
 
     def stop(self):
         """ """
