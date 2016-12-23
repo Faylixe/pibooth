@@ -29,8 +29,8 @@ class PiBooth(object):
         self.window = Window(size=size)
         self.currentMode = PHOTO_MODE
         self.root = Panel(orientation='horizontal',)
-        self.sidebar = Panel(orientation='vertical')
-        self.mode = Panel(orientation='horizontal')
+        self.sidebar = Panel(orientation='vertical', padding=10)
+        self.mode = Panel(orientation='horizontal', padding=10)
         self.modeLabel = Label('Photo', size='large')
         self.bind()
 
@@ -53,7 +53,10 @@ class PiBooth(object):
     def createRecordButton(self):
         """ """
         # TODO : Use centered button.
-        self.sidebar.add(Image('resources/icons/record.png'))
+        container = Panel(orientation='horizontal', padding=30)
+        button = Image('resources/icons/record.png')
+        container.add(button)
+        self.sidebar.add(container)
 
     def createSettings(self):
         """ Creates and configures widget for photo configuration. """
