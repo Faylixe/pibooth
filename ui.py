@@ -11,7 +11,11 @@ pygame.font.init()
 BACKGROUND_COLOR = (50, 50, 50)
 
 # UI font.
-FONT = pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 30) # TODO : Configure ?
+FONT = {
+    'small' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 10),
+    'medium' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 20),
+    'large' : pygame.font.Font('resources/fonts/roboto/Roboto-Thin.ttf', 30),
+}
 
 class Clickable(object):
     """ Object that can be clicked. """
@@ -32,7 +36,12 @@ class Container(Clickable):
     def add(self, child):
         """ Adds the given child object to this container. """
         self.childs.append(child)
-        
+    
+    def remove(self, child):
+        """ Removes the given child object of this container. """
+        if child in self.childs:
+            self.childs.remove(child)
+
     def onClickEvent(self, p):
         """ Handle click event and check if the area of this container has a hit. """
         for child in self.childs:
@@ -75,11 +84,11 @@ class Panel(Container):
 class Label(Clickable):
     """ Simple text object. """
 
-    def __init__(self, text, color=(255, 255, 255), font=FONT):
+    def __init__(self, text, color=(255, 255, 255), size='medium'):
         """ Default constructor. """
         Clickable.__init__(self)
         self.color = color
-        self.font = font
+        self.font = FONT[size]
         self.text = text
         self.bounds = None
         
@@ -117,14 +126,13 @@ class Window(Container):
         self.running = True
 
     def invalidate(self):
-        """ """
+        """ Invalidates this window and redraws all components for it. """
         self.window.fill(BACKGROUND_COLOR)
         for child in self.childs:
             child.draw(self.window, (0, 0))
 
-    def run(self):
-        """ """
-        # TODO : Consider running this in a single thread.
+    def start(self):
+        """ Start this window main loop. """
         self.invalidate()
         while self.running:
             for event in pygame.event.get():
@@ -133,3 +141,7 @@ class Window(Container):
                 elif event.type == MOUSEBUTTONDOWN:
                    self.onClickEvent(event.pos)
             pygame.display.flip()
+
+    def stop(self):
+        """ Stop this window. """
+        self.running = False

@@ -2,6 +2,10 @@
 
 from ui import Window, Panel, Label, Image
 
+# Constant for booth mode.
+PHOTO_MODE = 0
+VIDEO_MODE = 1
+
 def onPicturePerformed():
     """ Callback method that handles post picture processing. """
     pass
@@ -10,36 +14,58 @@ def onVideoPerformed():
     """ Callback method that handles post video processing. """
     pass
 
-# Top container.
-window = Window()
+class PiBooth(object):
+    """ Main application. """
+    
+    def __init__(self):
+        """ Default constructor. """
+        self.inCapture = False
+        self.window = Window()
+        self.currentMode = PHOTO_MODE
+        self.root = Panel(orientation='horizontal', padding=0)
+        self.photoSettings = Panel(orientation='vertical', padding=45)
+        self.videoSettings = Panel(orientation='vertical')
+        self.sidebar = Panel(orientation='vertical')
+        self.mode = Panel(orientation='horizontal')
+        self.modeLabel = Label('Photo', size='large')
+        self.bind()
 
-# Photo / Video switch.
-mode = Panel(orientation='horizontal')
-photo = Image('resources/icons/photo.png')
-video = Image('resources/icons/video.png')
-label = Label('Photo')
+    def bind(self):
+        self.sidebar.add(self.mode)
+        self.sidebar.add(self.photoSettings)
+        self.root.add(self.sidebar)
+        self.window.add(self.root)
 
-def setLabel(text):
-    label.text = text
-    window.invalidate()
+    def createModeController(self):
+        """ Creates and configures widget for booth mode controller. """
+        photo = Image('resources/icons/photo.png')
+        video = Image('resources/icons/video.png')
+        self.mode.add(photo)
+        self.mode.add(self.modeLabel)
+        self.mode.add(video)
+        photo.onClick = lambda: self.setMode(PHOTO_MODE)
+        video.onClick = lambda: self.setMode(VIDEO_MODE)
 
-def onPhotoMode():
-    setLabel('Photo')
+    def createPhotoSettings(self):
+        """ Creates and configures widget for photo configuration. """
+        self.photoSettings.add(Image('resources/icons/record.png'))
+    
+    def createVideoSettings(self):
+        """ Creates and configures widget for video configuration. """
+        self.videoSettings.add(Label('video settings'))
+    
+    def setMode(self, mode):
+        """ Sets current mode and updates UI accordingly. """
+        if self.inCapture or mode == self.currentMode: return
+        self.modeLabel.text = 'Photo' if mode == PHOTO_MODE else 'Video'
+        self.sidebar.remove(self.photoSettings if mode == VIDEO_MODE else self.videoSettings)
+        self.sidebar.add(self.videoSettings if mode == VIDEO_MODE else self.photoSettings)
+        self.currentMode = mode
+        self.window.invalidate()
 
-def onVideoMode():
-    setLabel('Video')
-
-photo.onClick = onPhotoMode
-video.onClick = onVideoMode
-mode.add(photo)
-mode.add(label)
-mode.add(video)
-
-# Start button.
-
-# Main panel.
-panel = Panel(orientation='vertical', padding=10)
-panel.add(mode)
-# Starting UI thread.
-window.add(panel)
-window.run()
+if __name__ == '__main__':    
+    booth = PiBooth()
+    booth.createModeController()
+    booth.createPhotoSettings()
+    booth.createVideoSettings()
+    booth.window.start()
