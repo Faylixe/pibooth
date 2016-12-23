@@ -16,7 +16,7 @@ class Camera(object):
 
     def effects(self):
         """ """
-        return self.delegate.IMAGE_EFFECTS
+        return self.delegate.IMAGE_EFFECTS.keys()
 
     def setEffect(self, effect):
         """ """
