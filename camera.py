@@ -2,26 +2,27 @@
 
 from picamera import PiCamera
 
+# List of available effects.
 EFFECTS = [
+    'Normal',
     'Noir et blanc',
+    'Sepia',
     'Avatar',
     'Cartoon',
-    'Paint',
-    'Sepia',
-    'Normal'
+    'Paint'
 ]
 
 class Camera(object):
-    """ """
+    """ Camera processing class. """
 
     def __init__(self, size=(640, 480)):
-        """ """
+        """ Default constructor. """
         self.size = size
         self.delegate = PiCamera()
     
     def start(self):
-        """ """
-        self.delegate.start_preview(fullscreen=False, window = (500, 20, self.size[0] - 500, self.size[1] - 40))
+        """ Starts the camera preview."""
+        self.delegate.start_preview(fullscreen=False, window = (350, 10, self.size[0] - 350, self.size[1] - 10))
 
     def effects(self):
         """ """

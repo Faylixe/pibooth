@@ -28,7 +28,7 @@ class PiBooth(object):
         self.camera = camera
         self.window = Window(size=size)
         self.currentMode = PHOTO_MODE
-        self.root = Panel(orientation='horizontal', padding=0)
+        self.root = Panel(orientation='horizontal',)
         self.sidebar = Panel(orientation='vertical')
         self.mode = Panel(orientation='horizontal')
         self.modeLabel = Label('Photo', size='large')
@@ -50,10 +50,14 @@ class PiBooth(object):
         photo.onClick = lambda: self.setMode(PHOTO_MODE)
         video.onClick = lambda: self.setMode(VIDEO_MODE)
 
-    def createSettings(self, effects, callback):
-        """ Creates and configures widget for photo configuration. """
+    def createRecordButton(self):
+        """ """
+        # TODO : Use centered button.
         self.sidebar.add(Image('resources/icons/record.png'))
-        self.effects = effects
+
+    def createSettings(self):
+        """ Creates and configures widget for photo configuration. """
+        self.effects = self.camera.effects()
         self.currentEffect = 0
         effectPanel = Panel(orientation='horizontal', padding=0)
         effectPanel.add(Image('resources/icons/filter.png'))
@@ -75,7 +79,7 @@ class PiBooth(object):
         self.window.invalidate()
 
     def setEffect(self, iteration):
-        """ """
+        """ Sets the current camera filter and updates UI accordingly. """
         self.currentEffect += iteration
         if self.currentEffect < 0:
             self.currentEffect = len(self.effects) - 1
@@ -92,7 +96,8 @@ if __name__ == '__main__':
     camera = Camera(size)
     booth = PiBooth(camera, size=size)
     booth.createModeController()
-    booth.createSettings(camera.effects(), lambda effect: camera.setEffect(effect))
+    booth.createRecordButton()
+    booth.createSettings()
     camera.start()
     booth.window.addEventListener(K_LEFT, lambda: booth.setEffect(-1))
     booth.window.addEventListener(K_RIGHT, lambda: booth.setEffect(1))

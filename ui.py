@@ -56,7 +56,7 @@ class Container(Clickable):
 class Panel(Container):
     """ Base class for a panel. """
     
-    def __init__(self, orientation='vertical', padding=20):
+    def __init__(self, orientation='vertical', padding=0):
         """ Default constructor. """
         Container.__init__(self)
         self.childs = []
