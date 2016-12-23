@@ -3,6 +3,8 @@
 from ui import Window, Panel, Label, Image
 from camera import Camera
 
+import pygame
+
 # Constant for booth mode.
 PHOTO_MODE = 0
 VIDEO_MODE = 1
