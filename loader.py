@@ -14,13 +14,13 @@ class Loader(object):
         """ Default constructor. """
         self.size = size
         self.window = Window(size=size, backgroundColor=WHITE)
-        self.container = Panel(orientation='vertical')
+        self.container = Panel(orientation='vertical', padding=50)
         self.window.add(self.container)
     
     def welcome(self):
         """ Welcome screen. """
         header = Label('Bienvenue', color=BLACK, size='large')
-        message = Label('Appuyer pour commencer')
+        message = Label('Appuyer pour commencer', color=BLACK, size='small')
         self.container.add(header)
         self.container.add(message)
         def onClick(position):
