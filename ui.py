@@ -118,17 +118,19 @@ class Image(Clickable):
 class Window(Container):
     """ Window container. """
 
-    def __init__(self, size=(640, 480)):
+    def __init__(self, size=(640, 480), backgroundColor=BACKGROUND_COLOR):
         """ Default constructor. """
         Container.__init__(self)
         self.size = size
+        self.backgroundColor = backgroundColor
         self.listeners = {}
         self.window = pygame.display.set_mode(size, FULLSCREEN)
         self.running = True
+        self.onWindowClick = None
 
     def invalidate(self):
         """ Invalidates this window and redraws all components for it. """
-        self.window.fill(BACKGROUND_COLOR)
+        self.window.fill(self.backgroundColor)
         for child in self.childs:
             child.draw(self.window, (0, 0))
 
@@ -153,6 +155,13 @@ class Window(Container):
 
             pygame.display.flip()
 
+    def onClickEvent(self, p):
+        """ """
+        if self.onWindowClick is not None:
+            self.onWindowClick(p)
+        else:
+            Container.__onClickEvent(self, p)
+            
     def stop(self):
         """ Stop this window. """
         self.running = False

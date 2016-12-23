@@ -24,8 +24,12 @@ class Camera(object):
         """ Starts the camera preview."""
         self.delegate.start_preview(fullscreen=False, window = (350, 10, self.size[0] - 350, self.size[1] - 10))
 
-    def effects(self):
+    def stop(self):
         """ """
+        self.delegate.stop_preview()
+
+    def effects(self):
+        """  """
         return EFFECTS
 
     def setEffect(self, effect):
@@ -48,8 +52,3 @@ class Camera(object):
         else:
             self.delegate.image_effect = 'none'
             self.delegate.color_effects = None
-
-
-    def stop(self):
-        """ """
-        self.delegate.stop_preview()

@@ -55,9 +55,10 @@ class PiBooth(object):
         # TODO : Use centered button.
         container = Panel(orientation='horizontal', padding=30)
         button = Image('resources/icons/record.png')
+        button.onClick = lambda: self.capture()
         container.add(button)
         self.sidebar.add(container)
-
+ 
     def createSettings(self):
         """ Creates and configures widget for photo configuration. """
         self.effects = self.camera.effects()
@@ -74,6 +75,10 @@ class PiBooth(object):
         effectPanel.add(container)
         self.sidebar.add(effectPanel)
 
+    def capture(self):
+        """ """
+        pass
+        
     def setMode(self, mode):
         """ Sets current mode and updates UI accordingly. """
         if self.inCapture or mode == self.currentMode: return
