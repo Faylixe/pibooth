@@ -64,10 +64,12 @@ class PiBooth(object):
         self.currentMode = mode
         self.window.invalidate()
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
+    info = pygame.display.Info()
+    size = (info.current_w, info.current_h)
     camera = Camera()
     camera.start()
-    booth = PiBooth()
+    booth = PiBooth(size=size)
     booth.createModeController()
     booth.createPhotoSettings()
     booth.createVideoSettings()
