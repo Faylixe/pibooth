@@ -56,6 +56,7 @@ class PiBooth(object):
         for effect in self.effects:
             button = Label(effect, size='small')
             button.onClick = lambda: callback(effect)
+            self.photoSettings.add(button)
     
     def createVideoSettings(self):
         """ Creates and configures widget for video configuration. """
@@ -74,9 +75,9 @@ if __name__ == '__main__':
     info = pygame.display.Info()
     size = (info.current_w, info.current_h)
     camera = Camera(size)
-    camera.start()
     booth = PiBooth(size=size)
     booth.createModeController()
     booth.createPhotoSettings(camera.effects(), lambda effect: camera.setEffect(effect))
     booth.createVideoSettings()
+    camera.start()
     booth.window.start()
