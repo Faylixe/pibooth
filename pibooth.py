@@ -26,14 +26,13 @@ class PiBooth(object):
         self.window = Window(size=size)
         self.currentMode = PHOTO_MODE
         self.root = Panel(orientation='horizontal', padding=0)
-        self.photoSettings = Panel(orientation='vertical', padding=45)
-        self.videoSettings = Panel(orientation='vertical')
         self.sidebar = Panel(orientation='vertical')
         self.mode = Panel(orientation='horizontal')
         self.modeLabel = Label('Photo', size='large')
         self.bind()
 
     def bind(self):
+        """ """
         self.sidebar.add(self.mode)
         self.sidebar.add(self.photoSettings)
         self.root.add(self.sidebar)
@@ -49,9 +48,9 @@ class PiBooth(object):
         photo.onClick = lambda: self.setMode(PHOTO_MODE)
         video.onClick = lambda: self.setMode(VIDEO_MODE)
 
-    def createPhotoSettings(self, effects, callback):
+    def createSettings(self, effects, callback):
         """ Creates and configures widget for photo configuration. """
-        self.photoSettings.add(Image('resources/icons/record.png'))
+        self.sidebar.add(Image('resources/icons/record.png'))
         self.effects = effects
         self.currentEffect = 0
         effectPanel = Panel(orientation='horizontal', padding=0)
@@ -64,7 +63,7 @@ class PiBooth(object):
         container.add(name)
         container.add(nextEffect)
         effectPanel.add(container)
-        self.photoSettings.add(effectPanel)
+        self.sidebar.add(effectPanel)
 
     def createVideoSettings(self):
         """ Creates and configures widget for video configuration. """
@@ -74,8 +73,6 @@ class PiBooth(object):
         """ Sets current mode and updates UI accordingly. """
         if self.inCapture or mode == self.currentMode: return
         self.modeLabel.text = 'Photo' if mode == PHOTO_MODE else 'Video'
-        self.sidebar.remove(self.photoSettings if mode == VIDEO_MODE else self.videoSettings)
-        self.sidebar.add(self.videoSettings if mode == VIDEO_MODE else self.photoSettings)
         self.currentMode = mode
         self.window.invalidate()
 
