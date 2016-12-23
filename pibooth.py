@@ -20,10 +20,10 @@ def onVideoPerformed():
 class PiBooth(object):
     """ Main application. """
     
-    def __init__(self):
+    def __init__(self, size=(640, 480)):
         """ Default constructor. """
         self.inCapture = False
-        self.window = Window()
+        self.window = Window(size=size)
         self.currentMode = PHOTO_MODE
         self.root = Panel(orientation='horizontal', padding=0)
         self.photoSettings = Panel(orientation='vertical', padding=45)
