@@ -5,6 +5,8 @@ from camera import Camera
 
 import pygame
 
+from pygame.locals import *
+
 # Constant for booth mode.
 PHOTO_MODE = 0
 VIDEO_MODE = 1
@@ -20,9 +22,10 @@ def onVideoPerformed():
 class PiBooth(object):
     """ Main application. """
     
-    def __init__(self, size=(640, 480)):
+    def __init__(self, camera, size=(640, 480)):
         """ Default constructor. """
         self.inCapture = False
+        self.camera = camera
         self.window = Window(size=size)
         self.currentMode = PHOTO_MODE
         self.root = Panel(orientation='horizontal', padding=0)
@@ -71,17 +74,24 @@ class PiBooth(object):
         self.currentMode = mode
         self.window.invalidate()
 
-    def setEffect(self, effect):
+    def setEffect(self, iteration):
         """ """
-        pass
+        self.currentEffect += iteration
+        if self.currentEffect < 0:
+            self.currentEffect = len(self.effects) - 1
+        elif self.currentEffect >= len(self.effects):
+            self.currentEffect = 0
+        self.camera.setEffect(self.effects[self.currentEffect])
 
 
 if __name__ == '__main__':
     info = pygame.display.Info()
     size = (info.current_w, info.current_h)
     camera = Camera(size)
-    booth = PiBooth(size=size)
+    booth = PiBooth(camera, size=size)
     booth.createModeController()
     booth.createSettings(camera.effects(), lambda effect: camera.setEffect(effect))
     camera.start()
+    booth.window.addEventListener(K_LEFT, lambda: booth.setEffect(-1))
+    booth.window.addEventListener(K_RIGHT, lambda: booth.setEffect(1))
     booth.window.start()

@@ -122,6 +122,7 @@ class Window(Container):
         """ Default constructor. """
         Container.__init__(self)
         self.size = size
+        self.listeners = {}
         self.window = pygame.display.set_mode(size, FULLSCREEN)
         self.running = True
 
@@ -130,6 +131,10 @@ class Window(Container):
         self.window.fill(BACKGROUND_COLOR)
         for child in self.childs:
             child.draw(self.window, (0, 0))
+
+    def addEventListener(self, key, callback):
+        """ """
+        self.listeners[key] = callback
 
     def start(self):
         """ Start this window main loop. """
@@ -140,8 +145,12 @@ class Window(Container):
                     self.running = False
                 elif event.type == MOUSEBUTTONDOWN:
                    self.onClickEvent(event.pos)
-                elif event.type == KEYDOWN and event.key == K_ESCAPE:
+                elif event.type == KEYDOWN
+                    if event.key == K_ESCAPE:
                         self.running = False
+                    elif event.key in self.listeners.keys():
+                        self.listeners[event.key]()
+                        
             pygame.display.flip()
 
     def stop(self):
