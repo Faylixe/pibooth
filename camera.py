@@ -30,14 +30,19 @@ class Camera(object):
     def setEffect(self, effect):
         """ Effect setter."""
         if effect == 'Avatar':
+            self.delegate.color_effects = None
             self.delegate.image_effect = 'colorswap'
         elif effect == 'Cartoon':
+            self.delegate.color_effects = None
             self.delegate.image_effect = 'cartoon'
         elif effect == 'Paint':
+            self.delegate.color_effects = None
             self.delegate.image_effect = 'watercolor'
         elif effect == 'Noir et blanc':
+            self.delegate.image_effect = 'none'
             self.delegate.color_effects = (128, 128)
         elif effect == 'Sepia':
+            self.delegate.image_effect = 'none'
             self.delegate.color_effects = (100, 150)
         else:
             self.delegate.image_effect = 'none'
