@@ -54,6 +54,7 @@ class PiBooth(object):
         self.photoSettings.add(Image('resources/icons/record.png'))
         self.effects = effects
         self.currentEffect = 0
+        print(self.effects)
         effectPanel = Panel(orientation='horizontal')
         # TODO : Add left arrow.
         container = Panel(orientation='vertical')
