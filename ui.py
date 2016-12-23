@@ -86,7 +86,7 @@ class Label(Clickable):
 
     def __init__(self, text, color=(255, 255, 255), size='medium'):
         """ Default constructor. """
-        Clickable.__init__(self)
+        Clickable.__init__(self)    
         self.color = color
         self.font = FONT[size]
         self.text = text
@@ -122,7 +122,7 @@ class Window(Container):
         """ Default constructor. """
         Container.__init__(self)
         self.size = size
-        self.window = pygame.display.set_mode(size)
+        self.window = pygame.display.set_mode(size, FULLSCREEN)
         self.running = True
 
     def invalidate(self):
