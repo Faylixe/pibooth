@@ -60,7 +60,7 @@ class PiBooth(object):
         container = Panel(orientation='horizontal', padding=10)
         prevEffect = Label('<', size='large')
         nextEffect = Label('>', size='large')
-        name = Label(self.effects[self.currentEffect], size='large')
+        self.effectLabel = Label(self.effects[self.currentEffect], size='large')
         container.add(prevEffect)
         container.add(name)
         container.add(nextEffect)
@@ -82,6 +82,7 @@ class PiBooth(object):
         elif self.currentEffect >= len(self.effects):
             self.currentEffect = 0
         self.camera.setEffect(self.effects[self.currentEffect])
+        self.effectLabel.text = self.effects[self.currentEffect]
         self.window.invalidate()
 
 
