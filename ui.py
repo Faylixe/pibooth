@@ -85,17 +85,18 @@ class Panel(Container):
 class Label(Clickable):
     """ Simple text object. """
 
-    def __init__(self, text, color=(255, 255, 255), size='medium'):
+    def __init__(self, text, color=(255, 255, 255), background=None, size='medium'):
         """ Default constructor. """
-        Clickable.__init__(self)    
+        Clickable.__init__(self)
         self.color = color
+        self.background = background
         self.font = FONT[size]
         self.text = text
         self.bounds = None
         
     def draw(self, target, position):
         """ Draw the rendered text into the given target at the given position. """
-        target.blit(self.font.render(self.text, 1, self.color), position)
+        target.blit(self.font.render(self.text, 1, self.color, self.background), position)
         size = self.font.size(self.text)
         self.bounds = (position[0], position[1], size[0], size[1])
         return size
@@ -119,13 +120,16 @@ class Image(Clickable):
 class Window(Container):
     """ Window container. """
 
-    def __init__(self, size=(640, 480), backgroundColor=BACKGROUND_COLOR):
+    def __init__(self, size=(640, 480), fullscreen=True, backgroundColor=BACKGROUND_COLOR):
         """ Default constructor. """
         Container.__init__(self)
         self.size = size
         self.backgroundColor = backgroundColor
         self.listeners = {}
-        self.window = pygame.display.set_mode(size, FULLSCREEN)
+        if fullscreen:
+            self.window = pygame.display.set_mode(size, FULLSCREEN)
+        else:
+            self.window = pygame.display.set_mode(size)
         self.running = True
         self.onWindowClick = None
 
@@ -161,7 +165,7 @@ class Window(Container):
         if self.onWindowClick is not None:
             self.onWindowClick(p)
         else:
-            Container.__onClickEvent(self, p)
+            Container.onClickEvent(self, p)
 
     def stop(self):
         """ Stop this window. """
