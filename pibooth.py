@@ -62,7 +62,7 @@ class PiBooth(object):
         nextEffect = Label('>', size='large')
         self.effectLabel = Label(self.effects[self.currentEffect], size='large')
         container.add(prevEffect)
-        container.add(name)
+        container.add(self.effectLabel )
         container.add(nextEffect)
         effectPanel.add(container)
         self.sidebar.add(effectPanel)
