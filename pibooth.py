@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from ui import Window, Panel, Label, Image
+from camera import Camera
 
 # Constant for booth mode.
 PHOTO_MODE = 0
@@ -64,6 +65,8 @@ class PiBooth(object):
         self.window.invalidate()
 
 if __name__ == '__main__':    
+    camera = Camera()
+    camera.start()
     booth = PiBooth()
     booth.createModeController()
     booth.createPhotoSettings()
